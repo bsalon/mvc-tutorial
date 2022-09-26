@@ -1,0 +1,37 @@
+[Server side]
+  * Inside a controller
+  * Check a valid model
+    - validations inside model class
+    - if (ModelState.IsValid)
+      {
+        // normal actions
+      }
+      return View(obj);
+  * Display errors inside view for each property
+    - <span asp-validation-for="Name" class="text-danger"></span>
+      > default error message will be displayed
+  * Display validation summary before fields
+    - <div asp-validation-summary="All"></div>
+  * Custom validation inside controller
+    - if (obj.Name == obj.DisplayOrder.ToString())
+      {
+        ModelState.AddModelError("CustomError", "This cannot match that");
+      }
+      > error will be displayed in the summary
+      > we can display it under field if we set name to property name
+
+[Client side]
+  * Inside a view
+  * Include partial view in our view
+    - @section Scripts{
+        @{
+          <partial name="_ValidationScriptsPartial.cshtml" />
+        }
+      }
+
+[Other]
+  * We can change display name of property in validation and fields
+    - add [DisplayName("The Name")] inside model before property
+  * There are more annotation available in the documentation
+    - [Range(1, 100, ErrorMessage="What is this")]
+      > value range of a model field

@@ -1,0 +1,51 @@
+[Model]
+  using System.ComponentModel.DataAnnotations;
+
+  [Key]
+  public int Id { get; set; }
+  [Required]
+  public string Name { get; set; }
+  public int DisplayOrder { get; set; }
+  public DateTime CreatedDateTime { get; set; } = DateTime.Now;
+
+
+[Database]
+  * Put connection strings inside appsettings.json
+    - "ConnectionStrings" : {
+        "DefaultConnection" : "Server=(localDB)\\MSSQLLocalDB;Database=DatabaseName;TrustedConnection=True;"
+      }
+      > TrustedConnection is true, so we can use just Windows Authentication
+
+[DBContext]
+  * Inside Data folder create NameDBContext.cs file
+    - NameDbContext : DBContext
+      > we need nuget package Microsoft.EntityFrameworkCore
+        = wait for red squigly line
+        = RC project, manage nuget packages
+        = Tools -> Nuget package manager -> Manage Nuget packages for solution -> EntityFrameworkCore -> Select project and install
+      > using Microsoft.EntityFrameworkCore;
+    - ctor is code snippet for contructor
+    - public NameDBContext(DBContextOptions<NameDBContext> options) : base(options)
+      {
+      }
+    - public DBSet<ModelName> TableName { get; set; }
+  * Inside Program.cs file
+    - builder.Services.AddDBContext<NameDBContext>(options => options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection") // only looks inside "ConnectionStrings"
+      ));
+      > we need nuget package Microsoft.EntityFrameworkCore.SqlServer same version
+    
+[Migration folder]
+  * Nuget package Microsoft.EntityFrameworkCore.Tools
+  * Tools -> Nuget package manager -> Package manager console
+    - need to run migrations using Entity Framework to push changes to database
+      > create the database and the table
+    - add a migration
+      > add-migraton AddCategoryToDatabase
+    - push the migrations to the database
+      > update-database
+  * Migration files
+    - up method is what needs to happen inside the migration
+      > CreateTable with name, columns and contraints
+    - down method is when something goes down and we need to rollback the changes
+  * Based on these migrations, EF creates optimized version of SQL queries

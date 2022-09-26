@@ -1,0 +1,54 @@
+[Project file]
+  * ProjectName.csproj
+  * Configuration file
+    - target framework
+    - item group
+      > used nuget packages
+
+[Dependencies]
+  * Packages
+    - used nuget packages
+
+[Properties folder]
+  * launchSettings.json
+  * Profiles we can use to run application
+    - port number
+    - default - ProjectNameWeb
+    - run dotnet command and trigger application
+
+[wwwroot folder]
+  * Project static files
+  * css
+  * js
+  * lib
+  * Root folder of the application
+
+[App settings]
+  * appsettings.json
+  * appsettings.Development.json | appsettings.Production.json
+    - different environment variables
+  * All connection strings and secrets
+
+[App running]
+  * Program.cs
+  * builder variable with built-in arguments
+  * register anything with dependency injection container
+    - between the builder and app=builder.Build() call
+  * Startup.cs
+    - builder and registering prior to .NET 6.0
+    - services added to container in method configure services
+    - everything onward in configure method
+  * HTTP request pipeline
+    - how application should respond to a web request
+      > request goes through the pipeline
+      > we can add items/middleware to the pipeline
+        = Auth, MVC, static files
+      > request gets modified by each of the middleware
+      > after the last middleware the response is send back to server
+    - app.UseStaticFiles();
+      > for wwwroot folder
+    - app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
+      > maps different pattern - it will be able to redirect a request to the corresponding controllers and action
+    - order of pipeline matters
+      > request will be passed in that order (UseAuthentication(), UseAuthorization())
+  * Responsible for running the application

@@ -1,0 +1,27 @@
+[Controller]
+  * GET is the same as Edit GET
+  * POST can use only id
+    - public IActionResult DeletePOST(int id?)
+      {
+        var obj = _db.Categories.Find(id);
+        if (obj == null)
+        {
+          return NotFound();
+        }
+        _db.Categories.Remove(obj);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
+  * We can name action as Delete and add [ActionName("Delete")] annotation
+
+
+[View]
+  * Similar to Edit View
+    - add <input asp-for="Id" hidden />
+    - different namings and styling
+      > btn-danger
+    - we dont need any validations
+    - inputs are disabled
+      > keyword disabled inside input tag
+  * Add delete button inside the index view
+

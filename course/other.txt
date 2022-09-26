@@ -1,0 +1,61 @@
+[Tag helpers]
+  * Similar to Angular directives
+    - tag helpers are for server-side rendering of HTML elements in Razor files
+  * Focused around html elements
+  * Natural to use
+
+[IActionResult]
+  * Generic type implementing all of the other return types
+    - we could use ViewResult and PageResult instead
+  * Result of action methods/pages or return types of action methods/pages handlers
+  * Appropriate when multiple ActionResult return types are possible in an action
+  * Examples of ActionResult in Razor pages (helper method):
+    - ContentResult (Content)
+    - FileContentResult (File)
+    - NotFoundResult (NotFound)
+    - PageResult (Page)
+    - PartialResult (Partial)
+    - RedirectToPageResult (RedirectToPage, RedirectToPagePermanent, RedirectToPagePerserveMethod, RedirectToPagePerserveMethodPermanent)
+    - ViewComponentResult
+  * Examples of ActionResult in MVC (helper method):
+    - ViewResult (View)
+    - PartialViewResult (PartialView)
+    - RedirectResult (Redirect)
+    - RedirectToRouteResult (RedirectToRoute, RedirectToAction)
+    - ContentResult (Content)
+    - JsonResult (Json)
+    - JavaScriptResult (JavaScript)
+    - FileResult (File)
+    - EmptyResult (Empty)
+  * Useful when returning multiple ActionResult types based on some conditions
+
+[Hot Reload]
+  * Added to .NET 6.0
+  * In older versions install MVC Razor Runtime compilation nuget package
+    - in Program.cs add builder.Services.AddRazorPages().AddRazorRuntimeCompilation() before build() method
+
+[Temp data]
+  * What we store in temp data stays there for only one request
+  * Perfect for displaying alerts
+  * In controllers
+    - TempData["success"] = "Created successfully";
+  * In Views
+    - @if (TempData["success"] != null)
+      {
+        <h2>TempData["success"]</h2>
+      }
+
+[New partial view]
+  * Partial views are in Views/Shared
+  * Add some code to view
+    - @if (TempData["success"] != null)
+      {
+        <h2>TempData["success"]</h2>
+      }
+      @if (TempData["error"] != null)
+      {
+        <h2>TempData["error"]</h2>
+      }
+  * Link partial view
+    - <partial name="_PartialView" />
+

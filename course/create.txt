@@ -1,0 +1,40 @@
+[Controller]
+  * public IActionResult Create() // GET
+    {
+        return View();
+    }
+  * [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Create(Category obj) // POST
+    {
+        _db.Categories.Add(obj);
+        _db.SaveChanges();
+        return RedirectToAction("Index"); // same controller
+    }
+     - anti forgery token to help and prevent cross site request forgery attack
+       > automatically inject a key in a form, which will be validated
+
+[View]
+  * Create.cshtml view
+  * Fetch Category model properties
+    - @model Category
+  * <form method="post">
+      <div class="border p-3 mt-4">
+        <div class="row pb-2">
+          <h2 class="text-primary">Create Category</h2>
+          <hr />
+        </div>
+        <div class="mb-3">
+          <label asp-for="Name"></label>
+          <input asp-for="Name" class="form-control"/>
+        </div>
+        <div class="mb-3">
+          <label asp-for="DisplayOrder"></label>
+          <input asp-for="DisplayOrder" class="form-control"/>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:150px">Create</button>
+        <a asp-controller="Category" asp-action="Index" class="btn btn-secondary" style="width:150px">
+          Back To List
+        </a>
+      </div>
+    </form>

@@ -1,0 +1,72 @@
+[Controller]
+  * CategoryController.cs
+    - RC on controller action to create view
+  * Add navigation in to view inside _Layout.cshtml
+  * To access the database we need to use dbContext object
+    - we access the object through dependency injection
+    - constructor with dbContext where we populate our private readonly dbContext
+  * We can pass for example IEnumerable<T> to a View constructor
+
+[View]
+  * To capture what is being passed from controller use @model IEnumerable<T>
+  * To display list of items we can use <table>
+    - <table class="table-bordered table-striped" style="width:100%">
+        <thead>
+          <tr>
+            <th>
+              Category Name
+            </th>
+            <th>
+              Display Order
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach (var obj in Model)
+          {
+            <tr>
+              <td width="50%">
+                @obj.Name
+              </td>
+              <td width="30%">
+                @obj.DisplayOrder
+              </td>
+            </tr>
+          }
+        </tbody>
+  * bootswatch.com has free themes for bootstrap
+    - download bootstrap.css
+    - create name.css file inside wwwroot/css
+      > paste the content of bootstrap.css inside
+    - remove .btn-primary and a section from site.css
+      > we will use what is inside bootswatch theme
+    - go to _Layout.cshtmp
+      > replace ~/lib/bootstrap/dist/css/bootstrap.min.css for ~/css/name.css
+      > replace ~/lib/bootstrap/dist/js/bootstrap.bundle.min.css for bundle from getbootstrap.com/docs/5.0/getting-started/introduction
+    - go to preview and copy navbar html
+      > paste it right before navbar in _Layout.cshtml
+        = add builder.Services.AddRazorPages().AddRazorRuntimeCompilation(); to enable hot reload for razor pages
+      > adjust navigation and remove class="text-dark"
+  * Footer styling in <footer class="">
+  * To add buttons we can use <div>
+    - by default bootstrap divides each row into 12 parts
+    - <div class="container p-3">
+        <div class="row pt-4">
+          <div class="col-6">
+            <h2 class="text-primary">Category List</h2>
+          </div>
+          <div class="col-6 text-end">
+            <a asp-controller="Category" asp-action="Create" class="btn btn-primary">
+              Create New Category
+            </a>
+          </div>
+        </div>
+        <br /> <br />
+      ... table ...
+      </div>
+  * Use icons from icons.getbootstrap.com
+    - click install and copy CDN
+      > paste it to _Layout.cshtml in <head>
+    - search for the icon in webpage
+    - click the icon and copy the icon font
+      > paste it before 'Create New Category' text with &nbsp; space

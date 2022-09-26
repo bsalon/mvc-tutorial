@@ -1,0 +1,56 @@
+Models
+  * Class in C# represents table
+    - properties of the class file will be the columns of the table
+  * Represents
+    - shape of the data
+    - all the data of the application
+    - the data being transferred between views and controllers
+    - any business related data that will represent all the tables of the database
+
+Views
+  * User interface
+  * Whatever we see on the website
+  * Clicking on the button will start interaction between view and model to display some data
+    - view does not interact directly with the models
+    - view uses controller
+    - when it is rendered it will pass into the controller
+  * Shared folder
+    - used for partial views (similar to user components in WinForms)
+    - views we can call within a view in multiple places in our application
+    - _Layout.cshtml
+      > default master page of the application (styling, header, render body, footer, common js)
+      > other views use this layout as master page
+    - _ValidationScriptsPartial.cshtml
+      > partial view with some scripts for some validations
+      > we will include this partial view in other views using validations
+    - Error.cshtml
+      > included if we encounter errors in the application
+  * _ViewsImport.cshtml
+    - global namespace
+      > using statement makes it visible across all the pages, controllers and pages (no need to type namespace everytime)
+    - tag helpers
+      > bindings provided by .NET CORE looking like HTML tags
+      > special tags for example for ASP controller and ASP action
+        = starts with a prefix asp- and then the name
+  * _ViewStart.cshtml
+    - defines default master page of our application
+      > we can overwrite this
+
+Controllers
+  * Interface between the model and the view to process all the business logic and incoming request
+  * Manipulates data using model and interacts with the view to render the final view
+  * Has a lots of action methods based on which controller will redirect the request to one of the action method
+  * Uses model to fetch all the data needed to display inside the view
+  * Passes the response send back and user can see the page
+  * All the logic of the application
+  * HomeController.cs will have all the views and UI pages placed in Views/Home folder
+    - controller name should end with Controller.cs
+    - action methods
+      > IActionResult is an abstraction for multiple return type (View, Action method, Page)
+      > for each action method there can be a view with the same name
+
+Routing
+  * https://localhost:5000/{controller}/{action}/{id}
+    - id is optional
+    - default route controller and action can be defined in Program.cs
+
